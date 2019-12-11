@@ -4,10 +4,10 @@ import h5py
 import numpy as np
 import pandas as pd
 
-source_dir = 'results/early_stopped_fc_0.25'
+source_dir = 'results/early_stopped_fc_0.5'
 
 seeds = [0, 1, 2, 3, 4]
-final_weights_inds = [4, 1, 1, 2, 1]
+final_weights_inds = [6, 5, 3, 5, 5]
 
 index = 0
 df = pd.DataFrame(
@@ -53,4 +53,4 @@ for seed, final_weights_ind in zip(seeds, final_weights_inds):
                 ]
                 index += 1
 
-df.to_csv('results/crawled_data_early_stopped_0.25_val_acc.csv')
+df.to_csv('nips-reproducibility-challenge-results/crawled_data_early_stopped_0.5_val_acc.csv')

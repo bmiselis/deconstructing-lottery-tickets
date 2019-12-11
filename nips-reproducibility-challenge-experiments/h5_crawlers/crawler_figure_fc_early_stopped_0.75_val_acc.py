@@ -53,4 +53,4 @@ for seed, final_weights_ind in zip(seeds, final_weights_inds):
                 ]
                 index += 1
 
-df.to_csv('results/crawled_data_early_stopped_0.75_val_acc.csv')
+df.to_csv('nips-reproducibility-challenge-results/crawled_data_early_stopped_0.75_val_acc.csv')

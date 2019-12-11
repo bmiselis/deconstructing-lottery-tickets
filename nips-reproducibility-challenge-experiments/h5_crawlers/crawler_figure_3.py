@@ -11,13 +11,19 @@ seeds = [0, 1, 2, 3, 4]
 index = 0
 df = pd.DataFrame(
     columns=['mask_criterion', 'seed', 'iteration', 'test_accuracy'],
-    index=np.arange(375)
+    index=np.arange(1125)
 )
 
 criteria_to_extract = [
+    'magnitude_increase',
+    'movement',
     'large_final',
-    'large_final_diff_sign',
-    'large_final_same_sign',
+    'small_final',
+    'large_init',
+    'small_init',
+    'large_init_large_final',
+    'small_init_small_final',
+    'random',
 ]
 
 for seed in seeds:
@@ -61,4 +67,4 @@ for seed in seeds:
                     ]
                     index += 1
 
-df.to_csv('results/crawled_data_figure_s5.csv')
+df.to_csv('nips-reproducibility-challenge-results/crawled_data_figure_3.csv')

@@ -15,11 +15,10 @@ df = pd.DataFrame(
 )
 
 criteria_to_extract = [
-    'magnitude_increase',
-    'magnitude_increase_diff_sign',
-    'magnitude_increase_same_sign',
+    'large_final',
+    'large_final_diff_sign',
+    'large_final_same_sign',
 ]
-
 
 for seed in seeds:
     seed_dir = os.path.join(source_dir, 'test_seed_{}'.format(seed))
@@ -62,4 +61,4 @@ for seed in seeds:
                     ]
                     index += 1
 
-df.to_csv('results/crawled_data_magnitude_increase_ablation.csv')
+df.to_csv('nips-reproducibility-challenge-results/crawled_data_figure_s5.csv')

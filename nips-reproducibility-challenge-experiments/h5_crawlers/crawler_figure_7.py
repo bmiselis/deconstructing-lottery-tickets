@@ -52,4 +52,4 @@ for seed in seeds:
                 ]
                 index += 1
 
-df.to_csv('results/crawled_data_early_stopped_0.5_val_acc.csv')
+df.to_csv('nips-reproducibility-challenge-results/crawled_data_early_stopped_0.5_val_acc.csv')
