@@ -50,7 +50,7 @@ def make_parser():
     parser.add_argument('--test_batch_size', type=int, default=0) # do 0 for all 
 
     #mask scenarios
-    parser.add_argument('--mask_scenarios', type=str, default = 'large_final,small_final,random,large_init,small_init,large_init_large_final,small_init_small_final,magnitude_increase,movement,snip,grad,large_final_diff_sign,large_final_same_sign,magnitude_increase_diff_sign,magnitude_increase_same_sign')
+    parser.add_argument('--mask_scenarios', type=str, default = 'large_final,small_final,random,large_init,small_init,large_init_large_final,small_init_small_final,magnitude_increase,movement,large_final_diff_sign,large_final_same_sign,magnitude_increase_diff_sign,magnitude_increase_same_sign')
     parser.add_argument('--prune_base', type=str, required = True, help = 'comma-separated list')
     parser.add_argument('--prune_power', type=str, required = True, help = 'comma-separated list')
     parser.add_argument('--layer_cutoff', type=str, required = True, help = 'comma-separated list')
@@ -365,9 +365,9 @@ def main():
             sess.close()
             tf.reset_default_graph()
             
-    hf_output.attrs['scenario_names'] = scenario_names
-    hf_output.attrs['pp_names'] = pp_names
-    dsets['signed_constants'] = hf_output.create_dataset('signed_constants', data=np.array(signed_constants))
+    # hf_output.attrs['scenario_names'] = scenario_names
+    # hf_output.attrs['pp_names'] = pp_names
+    # dsets['signed_constants'] = hf_output.create_dataset('signed_constants', data=np.array(signed_constants))
     hf_output.close()
 
                 

@@ -502,7 +502,9 @@ def main():
     init_model(model, input_dim)
     define_training(model, args)
 
-    sess = tf.InteractiveSession()
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    sess = tf.InteractiveSession(config=config)
     sess.run(tf.global_variables_initializer())
     
     if args.exp == 'none':
