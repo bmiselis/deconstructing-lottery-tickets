@@ -52,6 +52,7 @@ def make_parser():
     parser.add_argument('--test_batch_size', type=int, default=0) # do 0 for all
     parser.add_argument('--val_batch_size', type=int, default=0) # do 0 for all
     parser.add_argument('--no_shuffle', action='store_true')
+    parser.add_argument('--early_stop_val_acc', type=float, default=1.0, help='validation accuracy at which the training is force-stopped.')
 
     parser.add_argument('--print_every', type=int, default=100, help='print status update every n iterations')
     parser.add_argument('--output_dir', type=str, default=os.environ.get('GIT_RESULTS_MANAGER_DIR', None), help='output directory')
@@ -185,7 +186,11 @@ def train_and_eval(sess, model, snip_batch_size, train_x, train_y, val_x, val_y,
         
     dsets['one_iter_grads'][0] = calc_one_iter_grads(sess, model, train_x, train_y, snip_batch_size, dsets)
 
+    early_stop = False
     for epoch in range(args.num_epochs):
+        if early_stop:
+            break
+
         if not args.no_shuffle:
             shuffled_indices = np.random.permutation(train_y.shape[0]) # for shuffled mini-batches
 
@@ -255,7 +260,11 @@ def train_and_eval(sess, model, snip_batch_size, train_x, train_y, val_x, val_y,
             if args.mode == 'save_all' and  args.save_weights and iterations % args.eval_every == 0:
                 dsets['all_weights'][chunks_written] = flatten_all(model.trainable_weights)
                 chunks_written += 1
-                    
+
+            if cur_val_acc >= args.early_stop_val_acc:
+                print("!@# FORCE EARLY STOP ON {} VALIDATION ACCURACY #@!".format(cur_val_acc))
+                early_stop = True
+                break
 
     # save final weight values
     if args.save_weights and iterations % args.eval_every != 0:
@@ -359,7 +368,9 @@ def main():
     init_model(model, input_dim)
     define_training(model, args)
 
-    sess = tf.InteractiveSession()
+    config = tf.ConfigProto()
+    config.gpu_options.allow_growth = True
+    sess = tf.InteractiveSession(config=config)
     sess.run(tf.global_variables_initializer())
 
     for collection in ['train_step']: # 'eval_train' and 'eval_test' added manually later
